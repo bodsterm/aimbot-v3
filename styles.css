@@ -1,0 +1,357 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+body.light-mode {
+    background-color: #f0f0f0;
+    color: #333333;
+}
+
+#particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.wallhack-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.05) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.wallhack-overlay.active {
+    opacity: 0.2;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+[data-animate] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+[data-animate="1"] { animation-delay: 0.1s; }
+[data-animate="2"] { animation-delay: 0.2s; }
+[data-animate="3"] { animation-delay: 0.3s; }
+[data-animate="4"] { animation-delay: 0.4s; }
+[data-animate="5"] { animation-delay: 0.5s; }
+[data-animate="6"] { animation-delay: 0.6s; }
+[data-animate="7"] { animation-delay: 0.7s; }
+[data-animate="8"] { animation-delay: 0.8s; }
+[data-animate="9"] { animation-delay: 0.9s; }
+[data-animate="10"] { animation-delay: 1.0s; }
+[data-animate="11"] { animation-delay: 1.1s; }
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    animation: scaleIn 0.8s ease-out;
+}
+
+@keyframes scaleIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    animation: slideInLeft 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    background-color: #6200ea;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0;
+    transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+button:hover {
+    animation: pulse 1s infinite;
+    box-shadow: 0 0 10px rgba(98, 0, 234, 0.5);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+button[title]:hover:after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.status-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ff0000;
+    transition: background-color 0.3s;
+}
+
+.status-light.on {
+    background-color: #00ff00;
+    animation: pulseLight 1.5s infinite;
+}
+
+@keyframes pulseLight {
+    0% { box-shadow: 0 0 5px #00ff00; }
+    50% { box-shadow: 0 0 15px #00ff00; }
+    100% { box-shadow: 0 0 5px #00ff00; }
+}
+
+input[type="range"] {
+    width: 200px;
+    margin: 10px 0;
+    cursor: pointer;
+    background: linear-gradient(to right, #ff0000 0%, #ffff00 50%, #00ff00 100%);
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #6200ea;
+    border-radius: 50%;
+    animation: pulseThumb 1.5s infinite;
+}
+
+input[type="range"][title]:hover:after {
+    content: attr(title);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+@keyframes pulseThumb {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+#accuracy-value {
+    transition: opacity 0.3s;
+}
+
+#accuracy-value.updated {
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.target-input {
+    position: relative;
+    display: inline-block;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    background-color: inherit;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(98, 0, 234, 0.5);
+    outline: none;
+    border-color: #6200ea;
+}
+
+input[type="text"]::placeholder {
+    color: #888;
+}
+
+.reticle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="#6200ea" stroke-width="2"/><line x1="20" y1="10" x2="20" y2="30" stroke="#6200ea" stroke-width="2"/><line x1="10" y1="20" x2="30" y2="20" stroke="#6200ea" stroke-width="2"/></svg>') no-repeat center;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.reticle.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+footer {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    opacity: 0.7;
+}
+
+.mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: background-color 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: transform 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #6200ea;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+#mode-text {
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+body.light-mode input[type="text"] {
+    border-color: #333;
+}
+
+body.light-mode .slider {
+    background-color: #999;
+}
+
+body.light-mode .reticle {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="#333" stroke-width="2"/><line x1="20" y1="10" x2="20" y2="30" stroke="#333" stroke-width="2"/><line x1="10" y1="20" x2="30" y2="20" stroke="#333" stroke-width="2"/></svg>') no-repeat center;
+}
